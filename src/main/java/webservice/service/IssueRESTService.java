@@ -1,18 +1,22 @@
 package webservice.service;
 
-import javax.ws.rs.GET;
-import javax.ws.rs.MatrixParam;
-import javax.ws.rs.Path;
+import webservice.entity.Issue;
+
+import javax.persistence.EntityManager;
+import javax.persistence.EntityManagerFactory;
+import javax.persistence.Persistence;
+import javax.ws.rs.*;
 import javax.ws.rs.core.Response;
 
 @Path("/issue")
 public class IssueRESTService {
+//    @Inject
+//    private EntityManager manager;
 
     @GET
-    public Response getBooks(@MatrixParam("year") String year,
-                             @MatrixParam("author") String author,
-                             @MatrixParam("country") String country) {
-
+    public Response getIssues(@MatrixParam("year") String year,
+                              @MatrixParam("author") String author,
+                              @MatrixParam("country") String country) {
         return Response
                 .status(200)
                 .entity("getBooks is called, year : " + year
@@ -21,4 +25,19 @@ public class IssueRESTService {
 
     }
 
+    @POST
+    @Path("/add")
+    public Response addIssue(@FormParam("id") int id,
+                             @FormParam("name") String name,
+                             @FormParam("type") String type) {
+        Issue issue = new Issue(id, name, type);
+        EntityManagerFactory factory = Persistence.createEntityManagerFactory("primary");
+        EntityManager em = factory.createEntityManager();
+        em.getTransaction().begin();
+        em.persist(issue);
+        em.getTransaction().commit();
+        return Response.status(200)
+                .entity("addIssue is called, name : " + name)
+                .build();
+    }
 }

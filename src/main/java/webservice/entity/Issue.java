@@ -1,18 +1,35 @@
 package webservice.entity;
 
-public class Issue {
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import java.io.Serializable;
+
+@Entity
+public class Issue implements Serializable {
+
+    @Id
+//    @GeneratedValue(strategy = GenerationType.AUTO)
+    private int id;
     private String name;
+    private String type;
 
     public Issue() {
     }
 
-    public Issue(String name, String type) {
-
+    public Issue(int id, String name, String type) {
+        this.id = id;
         this.name = name;
         this.type = type;
     }
 
-    private String type;
+    @Override
+    public String toString() {
+        return "Issue{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", type='" + type + '\'' +
+                '}';
+    }
 
     public String getType() {
         return type;

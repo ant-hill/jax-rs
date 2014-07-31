@@ -5,10 +5,13 @@
 <body>
 <form action="rest/issue/add" method="post">
     <p>
+        Id : <input type="text" name="id" />
+    </p>
+    <p>
         Name : <input type="text" name="name" />
     </p>
     <p>
-        Age : <input type="text" name="age" />
+        Type : <input type="text" name="type" />
     </p>
     <input type="submit" value="Add issue" />
 </form>
